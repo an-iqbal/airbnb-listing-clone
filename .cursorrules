@@ -1,0 +1,44 @@
+﻿# Cursor Rules: High-Fidelity Airbnb Listing Clone Engine
+
+
+## 1. Visual Token Matching & Design System
+- Neutral Palette Discipline:
+  - Primary text: `#222222` (neutral-900 / airbnb-black)
+  - Secondary text / subtitles: `#717171` (neutral-500 / airbnb-gray)
+  - Card borders & divider rules: `#EBEBEB` / `#DDDDDD` (border-neutral-200)
+  - Canvas background: `#FFFFFF` (pure white)
+  - Subtle interactive surfaces: `#F7F7F7` (neutral-50)
+- Brand Accents:
+  - Airbnb Core Rose / Coral: `#FF385C`
+  - Active hover / gradient state: `#E00B41` to `#D70466`
+- 8px Baseline Grid:
+  - Maintain strict spacing increments (p-2 = 8px, p-4 = 16px, p-6 = 24px, gap-2 = 8px, gap-4 = 16px, gap-8 = 32px, gap-12 = 48px).
+  - Bento Hero Grid aspect ratio and outer border radius (`rounded-2xl`).
+- Typography:
+  - Clean sans-serif hierarchy matching Airbnb Cereal / Plus Jakarta Sans.
+  - Heading 1: 26px font-semibold tracking-tight.
+  - Section titles: 20px-22px font-semibold.
+  - Body copy: 15px font-normal leading-relaxed text-[#222222].
+
+
+## 2. Accessibility & Keyboard Constraints (WCAG 2.1 AA)
+- Modal Dialog Semantics:
+  - Every modal (Photo Tour, Lightbox, Amenities, Date picker, Guests picker) must declare `role="dialog"`, `aria-modal="true"`, and an explicit `aria-label` or `aria-labelledby`.
+- Focus Trapping & Management:
+  - Focus must be trapped inside active overlay dialogs.
+  - Clean teardown of all event listeners on unmount (`window.removeEventListener`).
+- Keyboard Navigation:
+  - `Escape` key must reliably close View 3 (Lightbox) back to View 2 (Photo Tour), and View 2 back to View 1 (Listing).
+  - `ArrowRight` and `ArrowLeft` keys must navigate sequential high-res photos within View 3.
+  - All interactive elements must support `Tab` navigation and `Enter` / `Space` activation.
+- Background Scroll Locking:
+  - Whenever an overlay or modal is active, body scrolling must be frozen via `document.body.style.overflow = 'hidden'`.
+
+
+## 3. Strict Type Safety & Code Quality
+- Zero `any` Types:
+  - No `any` or ambiguous `unknown` casts in component props, state hooks, or calculation utilities.
+  - Exhaustive TypeScript interfaces for `Photo`, `ListingData`, `Host`, `GuestCounts`, `PriceBreakdown`, and `ActiveView`.
+- Clean Component Encapsulation:
+  - Single responsibility principle for all components (`Navbar`, `PropertyHeader`, `BentoGrid`, `BookingWidget`, `Amenities`, `Reviews`, `PhotoTourModal`, `LightboxModal`).
+  - No backend coupling; purely deterministic client-state architecture.
